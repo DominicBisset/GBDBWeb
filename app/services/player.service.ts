@@ -1,6 +1,7 @@
 ﻿import GBGameModels from 'gb-game-models';
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
+import { Observable }     from 'rxjs/Observable';
 import '../rxjs-operators';
 
 @Injectable()
@@ -10,27 +11,30 @@ export class PlayerService {
 
     private playersUri: string = "http://localhost:3002/player";
 
-    getList(): Promise<Array<GBGameModels.Player>> {
+    getList(): Observable<Array<GBGameModels.Player>> {
 
         return this.http.get(this.playersUri)
-            .toPromise()
-            .then(function (response:any) {
-                console.log("Got data:", JSON.stringify(response.json()));
-                return response.json();
-            })
+            .map(this.extractData)
             .catch(this.handleError);
     }
 
-    get(id:Number): Promise<GBGameModels.Player> {
-
+    get(id:Number): Observable<GBGameModels.Player> {
         return this.http.get(this.playersUri + "/" + id.toString())
-            .toPromise()
-            .then(response => response.json().data)
+            .map(this.extractData)
             .catch(this.handleError);
+    }
+
+    private extractData(res: Response) {
+        let body = res.json();
+        return body || {};
     }
 
     private handleError(error: any) {
-        console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+        // In a real world app, we might use a remote logging infrastructure
+        // We'd also dig deeper into the error to get a better message
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg); // log to console instead
+        return Observable.throw(errMsg);
     }
 }
