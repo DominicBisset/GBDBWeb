@@ -1,18 +1,21 @@
 ﻿import GBGameModels from 'gb-game-models';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
+import {  BehaviorSubject }     from 'rxjs/BehaviorSubject';
 import '../rxjs-operators';
 
 @Injectable()
 export class PlayerService {
 
-    constructor(private http: Http) { }
-
     private playersUri: string = "http://localhost:3002/player";
 
-    getList(): Observable<Array<GBGameModels.Player>> {
+    private activePlayerSource = new BehaviorSubject<GBGameModels.Player>(null);
+    activePlayer = this.activePlayerSource.asObservable();
 
+    constructor(private http: Http) { }
+
+    getList(): Observable<Array<GBGameModels.Player>> {
         return this.http.get(this.playersUri)
             .map(this.extractData)
             .catch(this.handleError);
@@ -23,6 +26,15 @@ export class PlayerService {
             .map(this.extractData)
             .catch(this.handleError);
     }
+
+    activate(id: Number) {
+        console.log("activating player", id);
+        this.get(id).subscribe(
+            p => this.activePlayerSource.next(p)
+        );
+    }
+   
+        
 
     private extractData(res: Response) {
         let body = res.json();

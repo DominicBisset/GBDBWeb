@@ -8,19 +8,11 @@ import { PlayerService } from "./services/player.service";
     selector: 'my-app',
     template: `
         <h1>Guild Ball Database</h1>
-        <player-list (playerSelected) = "onPlayerSelected($event)" style="float:left">
+        <player-list style="float:left">
         </player-list>
-        <player-detail [player]="selectedPlayer" style="float:left">
+        <player-detail style="float:left">
         </player-detail>`,
     directives: [PlayerListComponent, PlayerDetailComponent],
     providers: [PlayerService]
 })
-export class AppComponent {
-    selectedPlayer: GBGameModels.Player;
-
-    onPlayerSelected(player: GBGameModels.Player) {
-        console.log("App detected player selected:", player.id);
-        this.selectedPlayer = player;
-    }
-
-}
+export class AppComponent {}

@@ -3,12 +3,19 @@ import GBGameModels from "gb-game-models";
 
 @Component({
     selector: 'player-preview',
-    template: '<div *ngIf="player" (click)="loadDetails($event)">{{player.title}} - {{player.id}}</div>',
+    template: `
+            <div *ngIf="player" (click)="loadDetails($event)" [style.background-image]="'url(../img/' + player.id + '.png)'">
+                {{player.title}}
+            </div>
+`,
     styles: [
         `div {
             width:300px;
             cursor: pointer;
-            background-color: lightgrey;
+            background-color: lightgray;
+            background-size: contain;
+            background-position: right center;
+            background-repeat: no-repeat;
             color: darkgrey;
             padding: 25px;
             margin: 30px;
