@@ -1,14 +1,15 @@
 ﻿import { Component, Input } from '@angular/core';
 import GBGameModels from "gb-game-models";
+import {PlaybookResult} from "./playbookResult.component";
 
 @Component({
     selector: 'playbook',
     template: `
-        <svg [style.width]="width" [style.height]="width / 4">
-            <circle *ngFor="let result of playbook" [attr.cx]="(result.col - 0.5) * (width / 8)" [attr.cy]="(result.row - 0.5) * (width / 8)" [attr.r]="width/16" stroke="green" stroke-width="1" [attr.fill]="yellow" />
-            <text *ngFor="let result of playbook" [attr.x]="(result.col - 0.75) * (width / 8)" [attr.y]="(result.row - 0.25) * (width / 8)">{{result.resultType}} {{result.magnitude}}</text>
+        <svg [style.width]="width" viewBox="0 0 800 200">
+            <g playbookResult *ngFor="let result of playbook" [result]="result"></g>
         </svg>
         `,
+    directives: [PlaybookResult]
 })
 export class PlaybookComponent {
     @Input() width: Number;
