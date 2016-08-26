@@ -5,7 +5,7 @@ import GBGameModels from "gb-game-models";
     selector: 'player-preview',
     template: `
             <div *ngIf="player" (click)="loadDetails($event)" [style.background-image]="'url(../img/' + player.id + '.png)'">
-                {{player.title}}
+                {{player.character.name}} <small>{{player.title}}</small>
             </div>
 `,
     styles: [

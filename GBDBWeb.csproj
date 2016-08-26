@@ -54,10 +54,14 @@
     <TypeScriptCompile Include="app\components\playbook.component.ts" />
     <TypeScriptCompile Include="app\components\playbookResult.component.ts" />
     <TypeScriptCompile Include="app\components\playerDetail.component.ts" />
+    <TypeScriptCompile Include="app\components\playerFilter.component.ts" />
     <TypeScriptCompile Include="app\components\playerList.component.ts" />
     <TypeScriptCompile Include="app\components\playerPreview.component.ts" />
+    <TypeScriptCompile Include="app\components\teamList.component.ts" />
+    <TypeScriptCompile Include="app\components\teamTag.component.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\rxjs-operators.ts" />
+    <TypeScriptCompile Include="app\services\team.service.ts" />
     <TypeScriptCompile Include="app\services\player.service.ts" />
     <TypeScriptCompile Include="e2e\app.e2e-spec.ts" />
     <TypeScriptCompile Include="typings\globals\angular-protractor\index.d.ts" />

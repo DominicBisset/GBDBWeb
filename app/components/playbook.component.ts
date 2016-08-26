@@ -5,7 +5,7 @@ import {PlaybookResult} from "./playbookResult.component";
 @Component({
     selector: 'playbook',
     template: `
-        <svg [style.width]="width" viewBox="0 0 800 200">
+        <svg viewBox="0 0 800 200">
             <g playbookResult *ngFor="let result of playbook" [result]="result" [attr.transform]="'translate(' + (result.col - 1) * 100 + ',' + (result.row -1) * 100 + ')'"></g>
         </svg>
         `,

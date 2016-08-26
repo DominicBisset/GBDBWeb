@@ -1,18 +1,19 @@
-﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Input, Output } from '@angular/core';
 import { Observable }     from 'rxjs/Observable';
 import '../rxjs-operators';
 import GBGameModels from "gb-game-models";
 import { PlayerService } from "../services/player.service";
-import { PlaybookComponent } from "./playbook.Component";
+import { PlaybookComponent } from "./playbook.component";
+import { TeamList } from "./teamList.component";
 
 @Component({
     selector: 'player-detail',
     template:`
         <div *ngIf="player">
-            <h1>{{player.id}}</h1>
+            <header><h1>{{player.character.name}}</h1><p>{{player.title}}</p></header>
             Plays for:
-            <ul><li *ngFor="let team of player.playsFor">{{team.name}}</li></ul>
-            <playbook [playbook]="player.playbook" [width]="300"></playbook>
+            <team-list [teamList]="player.playsFor" [full]="false"></team-list>
+            <playbook [playbook]="player.playbook"></playbook>
         </div>
         <p>{{errorMessage}}</p>
         `,
@@ -20,19 +21,16 @@ import { PlaybookComponent } from "./playbook.Component";
         div {
             width:300px;
             height: 600px;
-            background-color: red;
+            background-color: lightgrey;
             color: darkgrey;
             padding: 25px;
             margin: 30px;
         }
-        li{
-            display:block;
-            background-color:white;
-            float:left;
-            
+        header>*{
+            margin: 0px;
         }
     `],
-    directives: [PlaybookComponent]
+    directives: [TeamList, PlaybookComponent]
 })
 export class PlayerDetailComponent {
     
@@ -43,8 +41,14 @@ export class PlayerDetailComponent {
 
     ngOnInit() {
         this.playerService.activePlayer.subscribe(
-            p => this.player = p,
+            p => {
+                this.player = p;
+            },
             error => this.errorMessage = <any>error
         );
+    }
+
+    titles(p: GBGameModels.Player): Array<string> {
+        return p.title.split("|");
     }
 }
